@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const initialsInput = document.getElementById("initials");
   const submitButton = document.getElementById("submit");
   const feedbackContainer = document.getElementById("feedback");
+  
 
   let currentQuestionIndex = 0;
   let timer;
@@ -68,22 +69,46 @@ document.addEventListener("DOMContentLoaded", function () {
     finalScoreDisplay.textContent = score;
   }
 
-  function saveHighscore() {
+  function saveHighscore(event) {
+    event.preventDefault(); // Prevent the default form submission behavior
+  
     const initials = initialsInput.value.trim();
     if (initials !== "") {
       const highscores = JSON.parse(localStorage.getItem("highscores")) || [];
       highscores.push({ initials, score });
       localStorage.setItem("highscores", JSON.stringify(highscores));
       displayHighscores();
+  
+      // Optional: Display a confirmation message
+      feedbackContainer.textContent = "Highscore saved!";
     } else {
       feedbackContainer.textContent = "Please enter your initials.";
     }
   }
+  
 
   function displayHighscores() {
-    window.location.href = "highscores.html";
+    const highscoresList = document.getElementById("highscores");
+  
+    // Check if the element with ID "highscores" exists
+    if (highscoresList) {
+      const highscores = JSON.parse(localStorage.getItem("highscores")) || [];
+      highscores.sort((a, b) => b.score - a.score);
+  
+      highscoresList.innerHTML = "";
+      highscores.forEach(entry => {
+        const li = document.createElement("li");
+        li.textContent = `${entry.initials}: ${entry.score}`;
+        highscoresList.appendChild(li);
+      });
+    } else {
+      console.error("Element with ID 'highscores' not found.");
+    }
   }
+  
 
   startButton.addEventListener("click", startQuiz);
-  submitButton.addEventListener("click", saveHighscore);
+  submitButton.addEventListener("click", function (event) {
+    saveHighscore(event);
+});
 });
