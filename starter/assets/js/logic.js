@@ -1,3 +1,4 @@
+// The event listener is triggered when the initial html file has been loaded
 document.addEventListener("DOMContentLoaded", function () {
   const startButton = document.getElementById("start");
   const questionTitle = document.getElementById("question-title");
@@ -11,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const feedbackContainer = document.getElementById("feedback");
   
 
-  let currentQuestionIndex = 0;
+  let currentQuestionIndex = 0; 
   let timer;
   let score = 0;
   let timeLeft = 60;
@@ -22,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
     showQuestion();
     startTimer();
   }
-
+// This function shows the current question in the quiz
   function showQuestion() {
     const currentQuestion = questions[currentQuestionIndex];
     questionTitle.textContent = currentQuestion.question;
@@ -35,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
       choicesContainer.appendChild(button);
     });
   }
-
+// This function checks the answer of the question is correct, else a ten second penalty is applied
   function checkAnswer(choiceIndex) {
     const currentQuestion = questions[currentQuestionIndex];
     if (choiceIndex === currentQuestion.correctIndex) {
@@ -43,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       timeLeft -= 10;
     }
-
+// this checks to see if there are anymore questions left, if there are none it ends the quiz, if not it advances to the next question
     currentQuestionIndex++;
     if (currentQuestionIndex < questions.length) {
       showQuestion();
@@ -51,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
       endQuiz();
     }
   }
-
+  // This function starts the timer for the quiz until it elapses after 60 seconds
   function startTimer() {
     timer = setInterval(() => {
       if (timeLeft > 0) {
@@ -80,24 +81,19 @@ document.addEventListener("DOMContentLoaded", function () {
       localStorage.setItem("highscores", JSON.stringify(highscores));
       displayHighscores();
   
-      // Display a confirmation message
       feedbackContainer.textContent = "Highscore saved!";
     } else {
       feedbackContainer.textContent = "Please enter your initials.";
     }
   }
   
-
+// This function displays the the score of each user entry for the quiz
   function displayHighscores() {
-    console.log("displayHighscores function is being called");
-    console.log("Attempting to find element with ID 'highscores'");
     const highscoresList = document.getElementById("highscores");
-
-    // Check if the element with ID "highscores" exists
     if (highscoresList) {
+      console.log("Element with ID 'highscores' found.");
       const highscores = JSON.parse(localStorage.getItem("highscores")) || [];
       highscores.sort((a, b) => b.score - a.score);
-
       highscoresList.innerHTML = "";
       highscores.forEach(entry => {
         const li = document.createElement("li");
@@ -108,9 +104,6 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Element with ID 'highscores' not found.");
     }
   }
-
-  // Other code...
-
   startButton.addEventListener("click", startQuiz);
   submitButton.addEventListener("click", function (event) {
     saveHighscore(event);
