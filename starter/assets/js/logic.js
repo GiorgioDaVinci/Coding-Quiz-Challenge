@@ -89,13 +89,15 @@ document.addEventListener("DOMContentLoaded", function () {
   
 
   function displayHighscores() {
+    console.log("displayHighscores function is being called");
     console.log("Attempting to find element with ID 'highscores'");
     const highscoresList = document.getElementById("highscores");
-  
+
+    // Check if the element with ID "highscores" exists
     if (highscoresList) {
       const highscores = JSON.parse(localStorage.getItem("highscores")) || [];
       highscores.sort((a, b) => b.score - a.score);
-  
+
       highscoresList.innerHTML = "";
       highscores.forEach(entry => {
         const li = document.createElement("li");
@@ -106,10 +108,11 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Element with ID 'highscores' not found.");
     }
   }
-  
+
+  // Other code...
 
   startButton.addEventListener("click", startQuiz);
   submitButton.addEventListener("click", function (event) {
     saveHighscore(event);
-});
+  });
 });
