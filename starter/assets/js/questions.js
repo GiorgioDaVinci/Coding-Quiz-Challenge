@@ -10,5 +10,8 @@ const questions = [
     choices: ["Mars", "Venus", "Jupiter", "Saturn"],
     correctIndex: 0,
   },
-  
+  {question: "Which player won the CAF award of 2023?",
+  choices: ["Mo Salah", "Riyahd Mahrez", "Victor Osimhen", "Sadio Mane"],
+  correctIndex: 2,
+  },
 ];

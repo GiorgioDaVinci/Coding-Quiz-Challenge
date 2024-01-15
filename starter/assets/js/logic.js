@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const finalScoreDisplay = document.getElementById("final-score");
   const initialsInput = document.getElementById("initials");
   const submitButton = document.getElementById("submit");
+  const highscoresList = document.getElementById("highscores");
   const feedbackContainer = document.getElementById("feedback");
   
 
@@ -79,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
       localStorage.setItem("highscores", JSON.stringify(highscores));
       displayHighscores();
   
-      // Optional: Display a confirmation message
+      // Display a confirmation message
       feedbackContainer.textContent = "Highscore saved!";
     } else {
       feedbackContainer.textContent = "Please enter your initials.";
@@ -88,9 +89,9 @@ document.addEventListener("DOMContentLoaded", function () {
   
 
   function displayHighscores() {
+    console.log("Attempting to find element with ID 'highscores'");
     const highscoresList = document.getElementById("highscores");
   
-    // Check if the element with ID "highscores" exists
     if (highscoresList) {
       const highscores = JSON.parse(localStorage.getItem("highscores")) || [];
       highscores.sort((a, b) => b.score - a.score);
